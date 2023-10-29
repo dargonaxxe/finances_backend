@@ -1,0 +1,27 @@
+version: "3.7"
+
+volumes:
+  finances_postgres:
+
+services:
+  postgres:
+    image: postgres:16.0-alpine3.18
+    hostname: ${DB_HOST}
+    volumes:
+      - type: volume
+        source: finances_postgres
+        target: ${PGDATA}
+    environment:
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_DB: ${DB_NAME}
+      PGDATA: ${PGDATA}
+  backend:
+    image: finances-backend:dev
+    depends_on:
+      - postgres
+    environment:
+      DATABASE_NAME: ${DB_NAME}
+      DATABASE_USERNAME: ${DB_USER}
+      DATABASE_PASSWORD: ${DB_PASSWORD}
+      DATABASE_HOSTNAME: ${DB_HOST}
