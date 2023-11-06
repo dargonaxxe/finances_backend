@@ -23,7 +23,8 @@ defmodule FinancesBackend.MixProject do
     [
       {:ecto, "3.10.3"},
       {:ecto_sql, "3.10.2"},
-      {:postgrex, "0.17.3"}
+      {:postgrex, "0.17.3"},
+      {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
     ]
   end
 end
