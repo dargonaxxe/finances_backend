@@ -1,5 +1,3 @@
-ExUnit.start()
-
 defmodule FinancesBackend.UserTest do
   alias FinancesBackend.User
   use ExUnit.Case, async: true
@@ -73,6 +71,4 @@ defmodule FinancesBackend.UserTest do
     assert !result.valid?
     [pwd_string: {_, [count: 12, validation: :length, kind: :min, type: :string]}] = result.errors
   end
-
-  # todo: test that unique constraint actually works
 end

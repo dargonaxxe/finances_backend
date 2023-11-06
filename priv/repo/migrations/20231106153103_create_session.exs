@@ -3,9 +3,9 @@ defmodule Finances.Repo.Migrations.CreateSession do
 
   def change do
     create table("users") do
-      field :username, :string
-      field :password, :string
-      field :salt, :string
+      add :username, :string
+      add :password, :string
+      add :salt, :string
       timestamps()
     end
   end
