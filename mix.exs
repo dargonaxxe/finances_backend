@@ -25,6 +25,7 @@ defmodule FinancesBackend.MixProject do
       {:ecto_sql, "3.10.2"},
       {:postgrex, "0.17.3"},
       {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
+      {:bcrypt_elixir, "3.1.0"}
     ]
   end
 end
