@@ -17,7 +17,7 @@ defmodule FinancesBackend.User do
   @username_min_length 6
   @pwd_min_length 12
   @log_rounds_default 12
-  def changeset(user, attrs = %{username: _, password: password}) do
+  def changeset(user, %{username: _, password: password} = attrs) do
     log_rounds = Application.get_env(:bcrypt_elixir, :log_rounds, @log_rounds_default)
     salt = Bcrypt.Base.gen_salt(log_rounds)
     hash = Bcrypt.Base.hash_password(password, salt)
