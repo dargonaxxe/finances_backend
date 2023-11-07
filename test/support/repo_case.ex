@@ -1,4 +1,7 @@
 defmodule FinancesBackend.RepoCase do
+  @moduledoc """
+  Module that enables the ability to work with Finances.Repo for specific test.
+  """
   use ExUnit.CaseTemplate
 
   using do
