@@ -5,11 +5,11 @@ defmodule FinancesBackend.UserRepoTest do
   use ExUnit.Case
   use FinancesBackend.RepoCase
 
-  test "asd" do
+  test "unique constaint should prevent duplicating usernames" do
     user = %User{}
 
     attrs = %{
-      username: "asdasdasd",
+      username: "username",
       password: "passpasspass"
     }
 
