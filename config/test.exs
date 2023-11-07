@@ -7,3 +7,5 @@ config :finances_backend, Finances.Repo,
   hostname: System.get_env("DATABASE_HOSTNAME"),
   pool: Ecto.Adapters.SQL.Sandbox,
   log: false
+
+config :bcrypt_elixir, log_rounds: 4
