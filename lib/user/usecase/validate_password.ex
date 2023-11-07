@@ -22,7 +22,7 @@ defmodule FinancesBackend.User.Usecase.ValidatePassword do
     valid? = Bcrypt.verify_pass(password, user.password)
 
     if valid? do
-      :ok
+      {:ok, user.id}
     else
       {:error, :invalid_credentials}
     end

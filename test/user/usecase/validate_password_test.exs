@@ -14,7 +14,8 @@ defmodule FinancesBackend.User.Usecase.ValidatePasswordTest do
   end
 
   test "should return :ok when password is valid" do
-    FinancesBackend.sign_up("username", "passpasspass")
-    :ok = ValidatePassword.execute("username", "passpasspass")
+    {:ok, user} = FinancesBackend.sign_up("username", "passpasspass")
+    {:ok, user_id} = ValidatePassword.execute("username", "passpasspass")
+    assert user.id == user_id
   end
 end

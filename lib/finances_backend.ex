@@ -3,6 +3,8 @@ defmodule FinancesBackend do
   Documentation for `FinancesBackend`.
   """
 
+  alias FinancesBackend.Session.Usecase.CreateSession
+  alias FinancesBackend.User.Usecase.ValidatePassword
   alias Finances.Repo
   alias FinancesBackend.User
 
@@ -16,6 +18,18 @@ defmodule FinancesBackend do
     case changeset do
       {:ok, changeset} ->
         Repo.insert(changeset)
+
+      error ->
+        error
+    end
+  end
+
+  def sign_in(username, password) do
+    result = ValidatePassword.execute(username, password)
+
+    case result do
+      {:ok, user_id} ->
+        CreateSession.execute(user_id)
 
       error ->
         error
