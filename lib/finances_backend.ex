@@ -3,16 +3,22 @@ defmodule FinancesBackend do
   Documentation for `FinancesBackend`.
   """
 
-  @doc """
-  Hello world.
+  alias Finances.Repo
+  alias FinancesBackend.User
 
-  ## Examples
+  def sign_up(username, password) do
+    changeset =
+      User.changeset(
+        %User{},
+        %{username: username, password: password}
+      )
 
-      iex> FinancesBackend.hello()
-      :world
+    case changeset do
+      {:ok, changeset} ->
+        Repo.insert(changeset)
 
-  """
-  def hello do
-    :world
+      error ->
+        error
+    end
   end
 end
