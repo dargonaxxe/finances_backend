@@ -3,6 +3,7 @@ defmodule FinancesBackend do
   Documentation for `FinancesBackend`.
   """
 
+  alias FinancesBackend.Budget
   alias FinancesBackend.Account
   alias FinancesBackend.Session.Usecase.CreateSession
   alias FinancesBackend.User.Usecase.ValidatePassword
@@ -50,6 +51,24 @@ defmodule FinancesBackend do
     }
 
     changeset = Account.changeset(account, params)
+    Repo.insert(changeset)
+  end
+
+  @spec create_budget(Money.t(), id(), charlist(), Date.t(), Date.t()) ::
+          {:ok, Budget} | {:error, any()}
+  def create_budget(%Money{} = money, user_id, name, %Date{} = start_date, %Date{} = end_date) do
+    budget = %Budget{}
+
+    params = %{
+      name: name,
+      user_id: user_id,
+      allocated_money: money.amount,
+      currency: Money.Currency.number(money.currency),
+      start_date: start_date,
+      end_date: end_date
+    }
+
+    changeset = Budget.changeset(budget, params)
     Repo.insert(changeset)
   end
 end
