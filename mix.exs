@@ -5,7 +5,7 @@ defmodule FinancesBackend.MixProject do
     [
       app: :finances_backend,
       version: "0.1.0",
-      elixir: "1.15.4",
+      elixir: "1.15.6",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
       elixirc_paths: elixirc_paths(Mix.env())
@@ -31,7 +31,8 @@ defmodule FinancesBackend.MixProject do
       {:postgrex, "0.17.3"},
       {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
       {:bcrypt_elixir, "3.1.0"},
-      {:uuid, "1.1.8"}
+      {:uuid, "1.1.8"},
+      {:money, "1.12.3"}
     ]
   end
 end

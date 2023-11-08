@@ -5,7 +5,8 @@ defmodule FinancesBackend.Session.Usecase.CreateSession do
   alias Finances.Repo
   alias FinancesBackend.Session
 
-  @spec execute(charlist()) :: {:ok, Session} | {:error, any()}
+  @type id :: integer()
+  @spec execute(id()) :: {:ok, Session} | {:error, any()}
   def execute(user_id) do
     params = %{
       token: UUID.uuid1(),
