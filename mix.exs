@@ -5,7 +5,7 @@ defmodule FinancesBackend.MixProject do
     [
       app: :finances_backend,
       version: "0.1.0",
-      elixir: "1.15.4",
+      elixir: "1.15.6",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
       elixirc_paths: elixirc_paths(Mix.env())
