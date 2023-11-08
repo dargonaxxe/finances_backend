@@ -3,6 +3,7 @@ defmodule FinancesBackend do
   Documentation for `FinancesBackend`.
   """
 
+  alias FinancesBackend.Account
   alias FinancesBackend.Session.Usecase.CreateSession
   alias FinancesBackend.User.Usecase.ValidatePassword
   alias Finances.Repo
@@ -34,5 +35,21 @@ defmodule FinancesBackend do
       error ->
         error
     end
+  end
+
+  @type id :: integer()
+  @spec create_account(Money.t(), id(), charlist()) :: {:ok, Account} | {:error, any()}
+  def create_account(%Money{} = money, user_id, name) do
+    account = %Account{}
+
+    params = %{
+      balance: money.amount,
+      currency: Money.Currency.number(money.currency),
+      user_id: user_id,
+      name: name
+    }
+
+    changeset = Account.changeset(account, params)
+    Repo.insert(changeset)
   end
 end

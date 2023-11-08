@@ -4,7 +4,8 @@ defmodule FinancesBackend.User.Usecase.ValidatePassword do
   """
   alias FinancesBackend.User
 
-  @spec execute(charlist(), charlist()) :: :ok | {:error, :invalid_credentials}
+  @type id :: integer()
+  @spec execute(charlist(), charlist()) :: {:ok, id()} | {:error, :invalid_credentials}
   def execute(username, password) do
     user = Finances.Repo.get_by(FinancesBackend.User, username: username)
 
@@ -17,7 +18,7 @@ defmodule FinancesBackend.User.Usecase.ValidatePassword do
     end
   end
 
-  @spec validate_password(User, charlist()) :: :ok | {:error, :invalid_credentials}
+  @spec validate_password(User, charlist()) :: {:ok, id()} | {:error, :invalid_credentials}
   defp validate_password(%User{} = user, password) do
     valid? = Bcrypt.verify_pass(password, user.password)
 
