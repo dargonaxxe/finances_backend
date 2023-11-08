@@ -13,4 +13,15 @@ defmodule FinancesBackend.Account do
     field :name, :string
     timestamps()
   end
+
+  import Ecto.Changeset
+
+  @name_min_length 3
+  def changeset(%__MODULE__{} = account, %{} = params) do
+    account
+    |> cast(params, [:balance, :currency, :user_id, :name])
+    |> validate_required([:balance, :currency, :user_id, :name])
+    |> assoc_constraint(:user)
+    |> validate_length(:name, min: @name_min_length)
+  end
 end
