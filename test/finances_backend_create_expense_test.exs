@@ -10,7 +10,7 @@ defmodule FinancesBackend.CreateExpenseTest do
   @money_budget Money.new(124, "USD")
   @date_budget_start Date.from_iso8601!("2023-01-01")
   @date_budget_end Date.from_iso8601!("2024-01-01")
-  test "should return no error" do
+  test "should return no error and change account balance value" do
     {:ok, user} = FinancesBackend.sign_up("username", "passpasspass")
     {:ok, account} = FinancesBackend.create_account(@money_account, user.id, "account-name")
 
@@ -37,6 +37,9 @@ defmodule FinancesBackend.CreateExpenseTest do
     assert expense.date == @date_budget_start
     assert expense.amount == @money_expense.amount
     assert expense.comment == "comment"
+
+    account_updated = GetAccount.execute(account.id)
+    assert account_updated.balance == account.balance - expense.amount
   end
 
   test "should check account existence" do
