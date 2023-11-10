@@ -82,7 +82,7 @@ defmodule FinancesBackend do
       budget.user_id != account.user_id ->
         {:error, :budget_and_account_belong_to_different_users}
 
-      Date.before?(budget.start_date, date) || Date.before?(budget.end_date, date) ->
+      Date.before?(date, budget.start_date) || Date.before?(budget.end_date, date) ->
         {:error,
          {:date_is_out_of_budget, date: date, start: budget.start_date, end: budget.end_date}}
 
@@ -107,10 +107,14 @@ defmodule FinancesBackend do
 
         changeset = Expense.changeset(expense, params)
 
-        Repo.transaction(fn repo ->
-          repo.insert!(changeset)
-          repo.update!(change(account, balance: account.balance - amount))
-        end)
+        try do
+          Repo.transaction(fn repo ->
+            repo.update!(change(account, balance: account.balance - amount))
+            repo.insert!(changeset)
+          end)
+        rescue
+          e in Ecto.InvalidChangesetError -> {:error, e}
+        end
     end
   end
 
