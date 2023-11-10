@@ -3,6 +3,7 @@ defmodule FinancesBackend do
   Documentation for `FinancesBackend`.
   """
 
+  alias FinancesBackend.Account.Usecase.GetAccounts
   alias FinancesBackend.Expense
   alias FinancesBackend.Expense.Usecase.GetExpenses
   alias FinancesBackend.Income.Usecase.CreateIncome
@@ -87,5 +88,10 @@ defmodule FinancesBackend do
   @spec get_expenses(id(), Date.t()) :: list(Expense)
   def get_expenses(budget_id, %Date{} = date) do
     GetExpenses.execute(budget_id, date)
+  end
+
+  @spec get_accounts(id()) :: list(Account)
+  def get_accounts(user_id) do
+    GetAccounts.execute(user_id)
   end
 end
