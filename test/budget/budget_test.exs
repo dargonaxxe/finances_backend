@@ -14,7 +14,8 @@ defmodule FinancesBackend.BudgetTest do
     :start_date,
     :end_date,
     :inserted_at,
-    :updated_at
+    :updated_at,
+    :daily_prognosis
   ]
   test "should consist of expected fields" do
     actual_fields = Budget.__schema__(:fields)
