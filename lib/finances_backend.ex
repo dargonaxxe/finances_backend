@@ -3,6 +3,7 @@ defmodule FinancesBackend do
   Documentation for `FinancesBackend`.
   """
 
+  alias FinancesBackend.Expense.Usecase.CreateExpense
   alias FinancesBackend.Budget
   alias FinancesBackend.Account
   alias FinancesBackend.Session.Usecase.CreateSession
@@ -70,5 +71,9 @@ defmodule FinancesBackend do
 
     changeset = Budget.changeset(budget, params)
     Repo.insert(changeset)
+  end
+
+  def create_expense(budget_id, account_id, date, amount, comment) do
+    CreateExpense.execute(budget_id, account_id, date, amount, comment)
   end
 end
