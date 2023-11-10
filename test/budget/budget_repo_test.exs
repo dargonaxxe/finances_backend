@@ -6,13 +6,14 @@ defmodule FinancesBackend.BudgetRepoTest do
   alias FinancesBackend.Budget
   @start_date Date.from_iso8601!("2023-01-01")
   @end_date Date.from_iso8601!("2024-01-01")
+  @allocated_money 10_000
   test "should check user existence" do
     budget = %Budget{}
 
     params = %{
       name: "name",
       user_id: 0,
-      allocated_money: 1,
+      allocated_money: @allocated_money,
       currency: 2,
       start_date: @start_date,
       end_date: @end_date
@@ -52,7 +53,7 @@ defmodule FinancesBackend.BudgetRepoTest do
     params = %{
       name: "name",
       user_id: user.id,
-      allocated_money: 1,
+      allocated_money: @allocated_money,
       currency: 2,
       start_date: @start_date,
       end_date: @start_date
@@ -72,7 +73,7 @@ defmodule FinancesBackend.BudgetRepoTest do
     params = %{
       name: "name",
       user_id: user.id,
-      allocated_money: 1,
+      allocated_money: @allocated_money,
       currency: 2,
       start_date: @start_date,
       end_date: @end_date
@@ -82,9 +83,10 @@ defmodule FinancesBackend.BudgetRepoTest do
     {:ok, result} = Repo.insert(changeset)
     assert result.name == "name"
     assert result.user_id == user.id
-    assert result.allocated_money == 1
+    assert result.allocated_money == @allocated_money
     assert result.currency == 2
     assert result.start_date == @start_date
     assert result.end_date == @end_date
+    assert result.daily_prognosis == 27
   end
 end
