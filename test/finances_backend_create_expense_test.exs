@@ -25,8 +25,8 @@ defmodule FinancesBackend.CreateExpenseTest do
 
     {:ok, expense} =
       FinancesBackend.create_expense(
-        budget,
-        account,
+        budget.id,
+        account.id,
         @date_budget_start,
         @money_expense.amount,
         "comment"
@@ -85,8 +85,8 @@ defmodule FinancesBackend.CreateExpenseTest do
 
     {:error, :budget_and_account_belong_to_different_users} =
       FinancesBackend.create_expense(
-        budget,
-        account,
+        budget.id,
+        account.id,
         @date_budget_start,
         @money_expense.amount,
         ""
@@ -110,7 +110,7 @@ defmodule FinancesBackend.CreateExpenseTest do
 
     {:error,
      {:date_is_out_of_budget, [date: ^date, start: @date_budget_start, end: @date_budget_end]}} =
-      FinancesBackend.create_expense(budget, account, date, @money_expense.amount, "")
+      FinancesBackend.create_expense(budget.id, account.id, date, @money_expense.amount, "")
   end
 
   test "should check date is after budget start" do
@@ -130,7 +130,7 @@ defmodule FinancesBackend.CreateExpenseTest do
 
     {:error,
      {:date_is_out_of_budget, [date: ^date, start: @date_budget_start, end: @date_budget_end]}} =
-      FinancesBackend.create_expense(budget, account, date, @money_expense.amount, "")
+      FinancesBackend.create_expense(budget.id, account.id, date, @money_expense.amount, "")
   end
 
   test "should check that amount is positive" do
@@ -146,7 +146,8 @@ defmodule FinancesBackend.CreateExpenseTest do
         @date_budget_end
       )
 
-    {:error, reason} = FinancesBackend.create_expense(budget, account, @date_budget_start, 0, "")
+    {:error, reason} =
+      FinancesBackend.create_expense(budget.id, account.id, @date_budget_start, 0, "")
 
     [amount: {_, [constraint: :check, constraint_name: "amount_should_be_positive"]}] =
       reason.changeset.errors
@@ -167,8 +168,8 @@ defmodule FinancesBackend.CreateExpenseTest do
 
     {:error, {:insufficient_balance, [balance: 123, amount: 124]}} =
       FinancesBackend.create_expense(
-        budget,
-        account,
+        budget.id,
+        account.id,
         @date_budget_start,
         @money_account.amount + 1,
         ""
@@ -191,8 +192,8 @@ defmodule FinancesBackend.CreateExpenseTest do
     {:error,
      {:account_currency_differs_from_budget, [account_currency: 840, budget_currency: 978]}} =
       FinancesBackend.create_expense(
-        budget,
-        account,
+        budget.id,
+        account.id,
         @date_budget_start,
         @money_expense.amount,
         ""
@@ -212,7 +213,7 @@ defmodule FinancesBackend.CreateExpenseTest do
         @date_budget_end
       )
 
-    {:error, _} = FinancesBackend.create_expense(budget, account, @date_budget_start, 0, "")
+    {:error, _} = FinancesBackend.create_expense(budget.id, account.id, @date_budget_start, 0, "")
     ^account = GetAccount.execute(account.id)
     [] = Repo.all(Expense)
   end
