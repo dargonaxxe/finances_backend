@@ -12,6 +12,7 @@ defmodule FinancesBackend.Income do
     belongs_to :account, Account
     field :amount, :integer
     field :comment, :string
+    field :date, :date
     timestamps()
   end
 
@@ -20,8 +21,8 @@ defmodule FinancesBackend.Income do
   @spec changeset(Income, Map) :: Changeset
   def changeset(%Income{} = income, %{} = params) do
     income
-    |> cast(params, [:account_id, :amount, :comment])
-    |> validate_required([:account_id, :amount])
+    |> cast(params, [:account_id, :amount, :comment, :date])
+    |> validate_required([:account_id, :amount, :date])
     |> assoc_constraint(:account)
     |> check_constraint(:amount, name: "income_amount_should_be_positive")
   end

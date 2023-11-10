@@ -10,12 +10,13 @@ defmodule FinancesBackend.Income.Usecase.CreateIncome do
 
   import Ecto.Changeset, only: [change: 2]
 
-  def execute(account_id, amount, comment) do
+  def execute(account_id, amount, comment, date) do
     WithAccount.execute(account_id, fn account ->
       params = %{
         account_id: account_id,
         amount: amount,
-        comment: comment
+        comment: comment,
+        date: date
       }
 
       changeset =

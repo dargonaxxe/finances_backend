@@ -4,6 +4,7 @@ defmodule FinancesBackend.IncomeRepoTest do
   alias FinancesBackend.Income
   use FinancesBackend.RepoCase
 
+  @date Date.from_iso8601!("2023-01-01")
   @money Money.new(123, "USD")
   test "should return no error with comment" do
     {:ok, user} = FinancesBackend.sign_up("username", "passpasspass")
@@ -14,7 +15,8 @@ defmodule FinancesBackend.IncomeRepoTest do
     params = %{
       account_id: account.id,
       amount: 123,
-      comment: "comment"
+      comment: "comment",
+      date: @date
     }
 
     changeset = Income.changeset(income, params)
@@ -32,7 +34,8 @@ defmodule FinancesBackend.IncomeRepoTest do
     params = %{
       account_id: account.id,
       amount: 123,
-      comment: nil
+      comment: nil,
+      date: @date
     }
 
     changeset = Income.changeset(income, params)
@@ -48,7 +51,8 @@ defmodule FinancesBackend.IncomeRepoTest do
     params = %{
       account_id: 1,
       amount: 123,
-      comment: nil
+      comment: nil,
+      date: @date
     }
 
     {:error, reason} =
@@ -65,7 +69,8 @@ defmodule FinancesBackend.IncomeRepoTest do
     params = %{
       account_id: account.id,
       amount: 0,
-      comment: nil
+      comment: nil,
+      date: @date
     }
 
     {:error, reason} =
