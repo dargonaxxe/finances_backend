@@ -4,7 +4,7 @@ defmodule FinancesBackend.Expense.Usecase.CreateExpense do
   """
   alias Ecto.Changeset
   alias Finances.Repo
-  alias FinancesBackend.Account.Usecase.GetAccount
+  alias FinancesBackend.Account.Usecase.WithAccount
   alias FinancesBackend.Budget.Usecase.GetBudget
   alias FinancesBackend.Expense
   alias FinancesBackend.Account
@@ -15,7 +15,7 @@ defmodule FinancesBackend.Expense.Usecase.CreateExpense do
   @spec execute(id(), id(), Date.t(), integer(), charlist()) :: {:ok, Expense} | {:error, any()}
   def execute(budget_id, account_id, %Date{} = date, amount, comment) do
     with_budget(budget_id, fn budget ->
-      with_account(account_id, fn account ->
+      WithAccount.execute(account_id, fn account ->
         create_expense(budget, account, date, amount, comment)
       end)
     end)
@@ -28,16 +28,6 @@ defmodule FinancesBackend.Expense.Usecase.CreateExpense do
 
       %Budget{} = budget ->
         lambda.(budget)
-    end
-  end
-
-  defp with_account(account_id, lambda) do
-    case GetAccount.execute(account_id) do
-      nil ->
-        {:error, {:invalid_account_id, account_id}}
-
-      %Account{} = account ->
-        lambda.(account)
     end
   end
 
