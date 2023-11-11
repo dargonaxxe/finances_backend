@@ -14,21 +14,13 @@ defmodule FinancesBackend.Expense.Usecase.CreateExpense do
   @type id() :: integer()
   @spec execute(id(), id(), Date.t(), integer(), charlist()) :: {:ok, Expense} | {:error, any()}
   def execute(budget_id, account_id, %Date{} = date, amount, comment) do
-    with_budget(budget_id, fn budget ->
+    alias FinancesBackend.Budget.Usecase.WithBudget
+
+    WithBudget.execute(budget_id, fn budget ->
       WithAccount.execute(account_id, fn account ->
         create_expense(budget, account, date, amount, comment)
       end)
     end)
-  end
-
-  defp with_budget(budget_id, lambda) do
-    case GetBudget.execute(budget_id) do
-      nil ->
-        {:error, {:invalid_budget_id, budget_id}}
-
-      %Budget{} = budget ->
-        lambda.(budget)
-    end
   end
 
   defp create_expense(%Budget{} = budget, %Account{} = account, %Date{} = date, amount, comment) do
