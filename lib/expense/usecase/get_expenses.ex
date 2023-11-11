@@ -12,4 +12,9 @@ defmodule FinancesBackend.Expense.Usecase.GetExpenses do
     query = from e in Expense, where: e.budget_id == ^budget_id and e.date == ^date
     Repo.all(query)
   end
+
+  def execute(budget_id) do
+    query = from e in Expense, where: e.budget_id == ^budget_id
+    Repo.all(query)
+  end
 end
