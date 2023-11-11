@@ -14,7 +14,7 @@ defmodule FinancesBackend.Expense.Usecase.GetExpenses do
   end
 
   def execute(budget_id) do
-    query = from e in Expense, where: e.budget_id == ^budget_id
+    query = from e in Expense, where: e.budget_id == ^budget_id, order_by: [asc: :date]
     Repo.all(query)
   end
 end

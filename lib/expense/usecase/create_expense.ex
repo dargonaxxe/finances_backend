@@ -5,7 +5,6 @@ defmodule FinancesBackend.Expense.Usecase.CreateExpense do
   alias Ecto.Changeset
   alias Finances.Repo
   alias FinancesBackend.Account.Usecase.WithAccount
-  alias FinancesBackend.Budget.Usecase.GetBudget
   alias FinancesBackend.Expense
   alias FinancesBackend.Account
   alias FinancesBackend.Budget
