@@ -4,6 +4,10 @@ defmodule FinancesBackend.MixProject do
   def project do
     [
       app: :finances_backend,
+      build_path: "../../_build/",
+      config_path: "../../config/config.exs",
+      deps_path: "../../deps/",
+      lockfile: "../../mix.lock",
       version: "0.1.0",
       elixir: "1.15.6",
       start_permanent: Mix.env() == :prod,
