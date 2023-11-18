@@ -5,7 +5,7 @@ WORKDIR /app
 
 RUN mix local.hex --force && mix local.rebar --force
 
-COPY mix.exs mix.lock . 
+COPY mix.exs mix.lock /app/ 
 COPY apps/finances_backend/mix.exs apps/finances_backend/mix.lock /app/apps/finances_backend/
 COPY apps/finances_web/mix.exs /app/apps/finances_web/
 RUN mix deps.get && mix deps.compile
