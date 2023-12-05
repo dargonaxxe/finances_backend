@@ -5,11 +5,12 @@ defmodule FinancesBackend.Session.Usecase.CreateSession do
   alias Finances.Repo
   alias FinancesBackend.Session
 
+  @token_size 32
   @type id :: integer()
   @spec execute(id()) :: {:ok, Session} | {:error, any()}
   def execute(user_id) do
     params = %{
-      token: UUID.uuid1(),
+      token: :crypto.strong_rand_bytes(@token_size),
       user_id: user_id,
       valid_until: valid_until()
     }

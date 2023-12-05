@@ -6,7 +6,7 @@ defmodule FinancesBackend.Session do
   use Ecto.Schema
 
   schema "sessions" do
-    field :token, :string
+    field :token, :binary
     field :valid_until, :naive_datetime
     belongs_to :user, User
     timestamps()
