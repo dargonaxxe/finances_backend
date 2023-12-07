@@ -50,7 +50,8 @@ config :finances_web, FinancesWeb.Endpoint,
       ~r"priv/gettext/.*(po)$",
       ~r"lib/finances_web/(controllers|live|components)/.*(ex|heex)$"
     ]
-  ]
+  ],
+  pubsub_server: FinancesWeb.PubSub
 
 # Enable dev routes for dashboard and mailbox
 config :finances_web, dev_routes: true
@@ -60,3 +61,28 @@ config :finances_backend, Finances.Repo,
   username: System.get_env("DATABASE_USERNAME"),
   password: System.get_env("DATABASE_PASSWORD"),
   hostname: System.get_env("DATABASE_HOSTNAME")
+
+path_assets = Path.expand("../apps/finances_web/assets/", __DIR__)
+
+config :tailwind,
+  version: "3.3.6",
+  default: [
+    args: ~w(
+  --config=tailwind.config.js
+  --input=css/app.css
+  --output=../priv/static/assets/app.css),
+    cd: path_assets
+  ]
+
+config :esbuild,
+  version: "0.18.6",
+  default: [
+    args: ~w(
+    js/app.js 
+    --bundle 
+    --target=es2016 
+    --outdir=../priv/static/assets
+  ),
+    cd: path_assets,
+    env: %{"NODE_PATH" => Path.expand("../deps", __DIR__)}
+  ]

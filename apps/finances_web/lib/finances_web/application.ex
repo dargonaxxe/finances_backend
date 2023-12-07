@@ -8,7 +8,7 @@ defmodule FinancesWeb.Application do
   @impl true
   def start(_type, _args) do
     children = [
-      {Phoenix.PubSub, name: FinancesWeb.PubSub},
+      {Phoenix.PubSub, name: FinancesWeb.PubSub, adapter: Phoenix.PubSub.PG2},
       FinancesWeb.Telemetry,
       # Start a worker by calling: FinancesWeb.Worker.start_link(arg)
       # {FinancesWeb.Worker, arg},
