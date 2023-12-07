@@ -71,4 +71,50 @@ defmodule FinancesBackend.UserTest do
     assert !result.valid?
     [pwd_string: {_, [count: 12, validation: :length, kind: :min, type: :string]}] = result.errors
   end
+
+  describe "registration changeset" do
+    test "should validate username presence" do
+      user = %User{}
+      attrs = %{pwd_string: "passpasspass"}
+
+      %{valid?: false, errors: [username: {_, [validation: :required]}]} =
+        User.registration_changeset(user, attrs)
+    end
+
+    test "should validate pwd_string presence" do
+      user = %User{}
+      attrs = %{username: "username"}
+
+      %{valid?: false, errors: [pwd_string: {_, [validation: :required]}]} =
+        User.registration_changeset(user, attrs)
+    end
+
+    test "should validate password length" do
+      user = %User{}
+      attrs = %{username: "username", pwd_string: "passpass123"}
+
+      %{
+        valid?: false,
+        errors: [pwd_string: {_, [count: 12, validation: :length, kind: :min, type: :string]}]
+      } =
+        User.registration_changeset(user, attrs)
+    end
+
+    test "should validate username length" do
+      user = %User{}
+      attrs = %{username: "12345", pwd_string: "passpasspass"}
+
+      %{
+        valid?: false,
+        errors: [username: {_, [count: 6, validation: :length, kind: :min, type: :string]}]
+      } = User.registration_changeset(user, attrs)
+    end
+
+    test "should return valid changeset" do
+      user = %User{}
+      attrs = %{username: "username", pwd_string: "passpasspass"}
+
+      %{valid?: true} = User.registration_changeset(user, attrs)
+    end
+  end
 end

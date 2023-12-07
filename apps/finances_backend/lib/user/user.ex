@@ -5,6 +5,7 @@ defmodule FinancesBackend.User do
   """
   use Ecto.Schema
   import Ecto.Changeset
+  alias FinancesBackend.User
 
   schema "users" do
     field(:username, :string)
@@ -31,12 +32,29 @@ defmodule FinancesBackend.User do
     result =
       user
       |> cast(attrs, [:username, :password, :salt, :pwd_string])
-      |> validate_length(:pwd_string, min: @pwd_min_length)
-      |> validate_length(:username, min: @username_min_length)
-      |> unique_constraint(:username)
+      |> validate_password()
+      |> validate_username()
 
     {:ok, result}
   end
 
   def changeset(_, _), do: {:error, :missing_fields}
+
+  def registration_changeset(%User{} = user, attrs \\ %{}) do
+    user
+    |> cast(attrs, [:username, :pwd_string])
+    |> validate_required([:username, :pwd_string])
+    |> validate_password()
+    |> validate_username()
+  end
+
+  defp validate_password(%Ecto.Changeset{} = changeset) do
+    changeset |> validate_length(:pwd_string, min: @pwd_min_length)
+  end
+
+  defp validate_username(%Ecto.Changeset{} = changeset) do
+    changeset
+    |> validate_length(:username, min: @username_min_length)
+    |> unique_constraint(:username)
+  end
 end
