@@ -17,7 +17,8 @@ config :finances_web, FinancesWeb.Endpoint,
   watchers: [
     esbuild: {Esbuild, :install_and_run, [:default, ~w(--sourcemap=inline --watch)]},
     tailwind: {Tailwind, :install_and_run, [:default, ~w(--watch)]}
-  ]
+  ],
+  live_view: [signing_salt: "F56YSWzIjMZvAAIG"]
 
 # ## SSL Support
 #
