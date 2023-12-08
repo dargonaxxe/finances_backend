@@ -37,14 +37,15 @@ defmodule FinancesWeb.RegisterLive do
     """
   end
 
-  # def handle_event("validate", %{"user" => user_params}, %{assigns: %{user: user}} = socket) do
-  #   changeset =
-  #     user
-  #     |> User.registration_changeset(user_params)
-  #     |> Map.put(:action, :validate)
-  #
-  #   {:noreply, socket |> assign_form(changeset)}
-  # end
+  def handle_event("validate", %{"user" => user_params}, %{assigns: %{user: user}} = socket) do
+    changeset =
+      user
+      |> User.registration_changeset(user_params)
+      |> Map.put(:action, :validate)
+
+    {:noreply, socket |> assign_form(changeset)}
+  end
+
   #
   # def handle_event("create", _unsigned_params, socket) do
   #   # todo
