@@ -117,4 +117,10 @@ defmodule FinancesBackend.UserTest do
       %{valid?: true} = User.registration_changeset(user, attrs)
     end
   end
+
+  describe "User.new()" do
+    test "should return expected result" do
+      %User{username: nil, pwd_string: nil} = User.new()
+    end
+  end
 end

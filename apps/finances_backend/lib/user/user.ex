@@ -57,4 +57,8 @@ defmodule FinancesBackend.User do
     |> validate_length(:username, min: @username_min_length)
     |> unique_constraint(:username)
   end
+
+  def new() do
+    %User{}
+  end
 end
