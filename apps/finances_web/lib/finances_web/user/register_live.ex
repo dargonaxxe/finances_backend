@@ -26,13 +26,14 @@ defmodule FinancesWeb.RegisterLive do
 
   def render(assigns) do
     ~H"""
-    <!-- <.simple_form for={@form} phx-change="validate" phx-submit="create"> -->
-    <!--   <.input field={@form[:username]} label="Username"/> -->
-    <!--   <.input field={@form[:pwd_string]} label="Password" type="password"/> -->
-    <!--   <:actions>  -->
-    <!--     <.button>Sign Up</.button>  -->
-    <!--   </:actions>    -->
-    <!-- </.simple_form> -->
+    <.simple_form for={@form} phx-change="validate" phx-submit="create" id="user-form">
+      <h1>Create a user</h1>
+      <.input field={@form[:username]} label="Username"/>
+      <.input field={@form[:pwd_string]} label="Password" type="password"/>
+      <:actions> 
+        <.button>Sign Up</.button> 
+      </:actions>   
+    </.simple_form>
     """
   end
 

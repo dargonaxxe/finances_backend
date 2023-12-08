@@ -5,7 +5,8 @@ import Config
 config :finances_web, FinancesWeb.Endpoint,
   http: [ip: {127, 0, 0, 1}, port: 4002],
   secret_key_base: "D3LxtvC0DKTazmgRDh/HvGLhkvSzF3TBnTu4aBqk7tH13uRj39i9j+4hQV16ln25",
-  server: false
+  server: false,
+  live_view: [signing_salt: "F56YSWzIjMZvAAIG"]
 
 config :finances_backend, Finances.Repo,
   database: System.get_env("DATABASE_NAME"),
